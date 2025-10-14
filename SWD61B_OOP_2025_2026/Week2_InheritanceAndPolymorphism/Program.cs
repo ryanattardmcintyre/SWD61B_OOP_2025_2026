@@ -15,7 +15,7 @@ namespace Week2_InheritanceAndPolymorphism
             p.Id = "P1";
             p.X = 10; p.Y=20;
             p.Color = Color.Red;
-
+            
 
             Square s = new Square();
             s.Id = "S1";

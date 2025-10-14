@@ -21,7 +21,8 @@ namespace Week2_InheritanceAndPolymorphism
 
 
     //Task:
-    //1) Create a class called Circle which inherits from Square. Override the Describe() method accordingly
+    //1) Create a class called Circle which inherits from Square. Create a property with just the get() to find out the radius
+    //   Override the Describe() method accordingly
     //2) Create a class called Rectange which inherits from Square. Override the Describe() method accordingly
     //3) Add a new method called FindArea() in Square. Override this in all classes created so far accordingly
     //4) Create a class called Sphere which inherits from Circle. Override Describe() & FindArea()
@@ -47,6 +48,11 @@ namespace Week2_InheritanceAndPolymorphism
             return base.Equals(obj);
         }
 
-    
+
+        public virtual double FindArea() {
+            return Length * Length;
+        
+        }
+
     }
 }
