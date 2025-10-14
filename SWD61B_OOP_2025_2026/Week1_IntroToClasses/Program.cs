@@ -11,6 +11,40 @@ namespace Week1_IntroToClasses
     {
         static void Main(string[] args)
         {
+            Library myLibrary = new Library();
+
+            Book b = new Book(); //b is an object usually referred to as a local variable/field/object
+
+            Console.WriteLine("Input book name");
+            b.Title =  Console.ReadLine();
+            
+            Console.WriteLine("Input book isbn");
+            b.Isbn = Console.ReadLine();
+
+            Console.WriteLine("Input book stock");
+            b.Stock = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Input book price");
+            b.WholesalePrice = Convert.ToDouble(Console.ReadLine());
+
+            myLibrary.AddBook(b);
+
+            //myLibrary.Delete("1");
+
+            Console.WriteLine($"Books in Library: {myLibrary.BooksCount}");
+
+            Console.WriteLine($"Total cost: {myLibrary.Buy("1", 5)} ");
+
+            Console.ReadKey();
+
+
+
+
+
+
+
+
+            //--------------------------------------------------------------------------------------------
             //Class is the template
             //Real "objects" are instances of a class
 
@@ -52,15 +86,7 @@ namespace Week1_IntroToClasses
 
             //--------------------------------------------------------------------------
 
-            Book b = new Book(); //in one line declaring and creating an instance of book in 1 line
-            Console.WriteLine("Ïnput the how many copies you have");
-            b.Stock = Convert.ToInt32(Console.ReadLine());//-10000
-             
-
-            b.WholesalePrice = 1;
-            b.RetailPrice = 1;
-
-
+         
 
 
         }
