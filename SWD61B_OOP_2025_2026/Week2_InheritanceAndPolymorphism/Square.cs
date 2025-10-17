@@ -31,6 +31,16 @@ namespace Week2_InheritanceAndPolymorphism
 
     public class Square: Point
     {
+        public Square(): base()
+        {
+            
+        }
+
+        //base refers to the constructor of the Base class i.e Point
+        public Square(int x , int y): base(x, y)  
+        { }
+
+
         //properties
         public double Length { get; set; }
 
@@ -42,11 +52,7 @@ namespace Week2_InheritanceAndPolymorphism
             return $"Square with id: {Id}, at ({X}, {Y}) with Length: {Length}";
         }
 
-        //to do:
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
+       
 
 
         public virtual double FindArea() {
