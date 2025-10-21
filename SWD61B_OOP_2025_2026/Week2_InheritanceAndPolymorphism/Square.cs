@@ -31,6 +31,8 @@ namespace Week2_InheritanceAndPolymorphism
 
     public class Square: Point
     {
+        //when you create more than 1 constructor you are basically adopting
+        //STATIC POLYMORPHISM
         public Square(): base()
         {
             
@@ -45,6 +47,8 @@ namespace Week2_InheritanceAndPolymorphism
         public double Length { get; set; }
 
         //methods
+        //when you are overriding a method that is
+        //DYNAMIC POLYMORPHISM
         public override string Describe()
         {
             //return base.Describe(); //it will by default call the Point -> Describe()

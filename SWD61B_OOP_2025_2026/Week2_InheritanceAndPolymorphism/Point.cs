@@ -70,5 +70,25 @@ namespace Week2_InheritanceAndPolymorphism
         {
             return Describe();
         }
+
+        //This is static polymorphism
+        public void Scale(int scale)
+        {
+            Zoom += scale;
+        }
+
+        public void Scale(double percentage)
+        {
+            Zoom *= Convert.ToInt32((percentage / 100));
+        }
+
+        public void Scale(int scale,  int min, int max)
+        {
+            Zoom += scale;
+            if(Zoom > max)
+                Zoom = max;
+            if (Zoom < min)
+                Zoom = min;
+        }
     }
 }
