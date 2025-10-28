@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3_Interfaces", "Week3_I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week3_AbstractClasses", "Week3_AbstractClasses\Week3_AbstractClasses.csproj", "{9F7F894F-B030-4DE5-8556-358BDC0D93B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Week4_Worksheet6", "Week4_Worksheet6\Week4_Worksheet6.csproj", "{A67A1846-FF73-4D1D-9102-CD3295E71CD5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9F7F894F-B030-4DE5-8556-358BDC0D93B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F7F894F-B030-4DE5-8556-358BDC0D93B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F7F894F-B030-4DE5-8556-358BDC0D93B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A67A1846-FF73-4D1D-9102-CD3295E71CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A67A1846-FF73-4D1D-9102-CD3295E71CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A67A1846-FF73-4D1D-9102-CD3295E71CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A67A1846-FF73-4D1D-9102-CD3295E71CD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
