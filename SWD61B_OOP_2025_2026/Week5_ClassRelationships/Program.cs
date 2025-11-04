@@ -34,7 +34,7 @@ namespace Week5_ClassRelationships
             
             Building myHouse = new Building();
 
-            Room myRoom = new Room();
+            Room myRoom = new Room(myHouse);
         }
     }
 }
