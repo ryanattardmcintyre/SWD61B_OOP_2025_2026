@@ -28,9 +28,11 @@ namespace Week5_ClassRelationships.Aggregation
         public List<Person> PresentPeople { get; set; }
         public List<Person> AbsentPeople { get; set; }
 
-
-        public Attendance(Lecturer l, Group g) 
+        public Unit Unit { get; set; }
+         
+        public Attendance(Lecturer l, Group g, Unit u) 
         {
+            Unit = u;
             Timestamp = DateTime.Now;
             Lecturer = l;
             group = g;

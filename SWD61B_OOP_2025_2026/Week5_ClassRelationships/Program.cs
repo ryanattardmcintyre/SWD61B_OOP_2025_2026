@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Week5_ClassRelationships.Aggregation;
 using Week5_ClassRelationships.Composition;
 
 namespace Week5_ClassRelationships
@@ -35,6 +36,11 @@ namespace Week5_ClassRelationships
             Building myHouse = new Building();
 
             Room myRoom = new Room(myHouse);
+
+
+             
+
+
         }
     }
 }
