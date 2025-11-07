@@ -8,6 +8,7 @@ namespace Week5_ClassRelationships.Aggregation
 {
     public abstract class Person
     {
+       public int Age { get; set; }
        public string FirstName { get; set; }
        public string LastName { get; set; }
 

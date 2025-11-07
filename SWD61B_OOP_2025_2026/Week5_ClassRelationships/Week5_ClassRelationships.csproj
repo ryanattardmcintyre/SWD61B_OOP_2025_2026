@@ -51,6 +51,12 @@
     <Compile Include="Aggregation\Programme.cs" />
     <Compile Include="Aggregation\Student.cs" />
     <Compile Include="Aggregation\Unit.cs" />
+    <Compile Include="Association\BlackFridayPromotion.cs" />
+    <Compile Include="Association\ChristmasPromotion.cs" />
+    <Compile Include="Association\Event.cs" />
+    <Compile Include="Association\Promotion.cs" />
+    <Compile Include="Association\Seat.cs" />
+    <Compile Include="Association\Ticket.cs" />
     <Compile Include="Composition\Building.cs" />
     <Compile Include="Composition\ComputerLab.cs" />
     <Compile Include="Composition\Room.cs" />
