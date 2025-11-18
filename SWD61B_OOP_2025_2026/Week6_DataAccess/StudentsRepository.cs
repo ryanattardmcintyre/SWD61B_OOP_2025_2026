@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Week6_Common;
+
+namespace Week6_DataAccess
+{
+    public class StudentsRepository
+    {
+        //this allows me to connect to the database
+        //this is an abstraction of the database i.e. it represents the database
+        private AttendanceDbContext _context;
+        public StudentsRepository(AttendanceDbContext context) {
+            _context = context; //assigning the parameter holding the object which
+                                //represents the database into a field. Why?
+                                //Reason: I need to make calls on that object from the CRUD methods
+        }
+
+        //CRUD
+
+        //Read:
+        //IQueryable: is used like a List but it doesn't hold the data but it holds a prepared SQL statement
+        //            SQL is generated automatically and then executes the SQL when at one point you type
+        //            .ToList()
+
+        //IQueryable: is much more efficient than List!!!
+        public IQueryable<Student> Get()
+        {
+            return _context.Students; //Students property represents the table Students from the database
+        }
+
+    }
+}
