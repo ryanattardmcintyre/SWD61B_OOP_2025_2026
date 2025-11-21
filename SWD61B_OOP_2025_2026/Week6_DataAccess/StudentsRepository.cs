@@ -26,9 +26,32 @@ namespace Week6_DataAccess
         //            .ToList()
 
         //IQueryable: is much more efficient than List!!!
+        /// <summary>
+        /// This method returns all the students
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<Student> Get()
         {
             return _context.Students; //Students property represents the table Students from the database
+        }
+
+        /// <summary>
+        /// This method returns a single instance of a student with the associated primary key
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Student Get(int id)
+        {
+            //LINQ-to-ENTITIES
+            return Get().SingleOrDefault(s => s.Id == id);
+
+            /*
+             * var list = Get();
+             * foreach (var s in list)
+             * {
+             *    if(s.Id == id) return s;
+             * }
+             */ 
         }
 
     }
