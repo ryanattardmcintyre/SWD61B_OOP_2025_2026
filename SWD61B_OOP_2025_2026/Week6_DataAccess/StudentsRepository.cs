@@ -79,7 +79,10 @@ namespace Week6_DataAccess
             //lambda expression  
             //Select * From Students where Name Like '%@keyword%'
 
-            return Get().Where(x => x.Name.StartsWith(keyword)).OrderBy(x=>x.Name).OrderBy(x=>x.Surname); 
+            return Get()
+                .Where(x => x.Name.StartsWith(keyword) || x.Surname.StartsWith(keyword))
+                .OrderBy(x=>x.Name)
+                .OrderBy(x=>x.Surname); 
         }
 
     }

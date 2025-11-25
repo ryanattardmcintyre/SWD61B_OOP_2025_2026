@@ -107,6 +107,18 @@ namespace Week6_PresentationConsoleApp
                         break;
 
                     case 3:
+                        Console.WriteLine("Input group name: ");
+                        string groupName = Console.ReadLine();
+
+                        var filteredByGroup = studentsRepository.GetByGroup(groupName);
+
+                        foreach (var student in filteredByGroup)
+                        {
+                            Console.WriteLine($"{student.Id}\t{student.Name}\t{student.Surname}");
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine("Press a key to go back to Students menu...");
                         break;
 
                     case 4:
