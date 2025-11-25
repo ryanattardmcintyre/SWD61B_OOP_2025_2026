@@ -54,5 +54,33 @@ namespace Week6_DataAccess
              */ 
         }
 
+        public IQueryable<Student> GetByGroup(int groupId)
+        {
+            return Get().Where(x => x.GroupFK == groupId);
+        }
+
+        public IQueryable<Student> GetByGroup(string groupName)
+        {
+            //Group property inside Student class was not created in the database
+            //That was created automatically by the Entity Data Model because we had relationships
+            //So an advantage of the Entity Data Model, is that it creates these so-called 
+            //Navigational properties
+
+            //Select Students.*, Group.Id, Group.Name
+            //From Students inner join Groups
+            //on Students.GroupFK equals Groups.Id
+            //Where Group.Name = ''
+
+            return Get().Where(x => x.Group.Name == groupName);
+        }
+
+        public IQueryable<Student> Get(string keyword) 
+        {
+            //lambda expression  
+            //Select * From Students where Name Like '%@keyword%'
+
+            return Get().Where(x => x.Name.StartsWith(keyword)).OrderBy(x=>x.Name).OrderBy(x=>x.Surname); 
+        }
+
     }
 }

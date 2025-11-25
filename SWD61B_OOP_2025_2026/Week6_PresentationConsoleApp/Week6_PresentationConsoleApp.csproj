@@ -60,6 +60,16 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Week6_Common\Week6_Common.csproj">
+      <Project>{db608ec7-2f87-4c32-8b52-980a29c53130}</Project>
+      <Name>Week6_Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Week6_DataAccess\Week6_DataAccess.csproj">
+      <Project>{675398ce-6639-431a-83e7-25a9ab82da71}</Project>
+      <Name>Week6_DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
