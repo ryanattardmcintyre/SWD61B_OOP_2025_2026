@@ -85,5 +85,60 @@ namespace Week6_DataAccess
                 .OrderBy(x=>x.Surname); 
         }
 
+
+        public bool Add(Student s)
+        {
+            if (Get().SingleOrDefault(x=>x.IdCardNo == s.IdCardNo) == null)
+            {
+                _context.Students.Add(s); //adds Student s into the abstraction of the database
+                _context.SaveChanges(); //persists the data into the storage layer i.e. db
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Update(Student s)
+        {
+            if (Get().SingleOrDefault(x => x.IdCardNo == s.IdCardNo) == null)
+            {
+                return false;
+            }
+            else
+            {
+                var originalStudent = Get().SingleOrDefault(x => x.IdCardNo == s.IdCardNo);
+                if (originalStudent != null)
+                {
+                    originalStudent.Surname = s.Surname;
+                    originalStudent.Name = s.Name;
+                    originalStudent.Email = s.Email;
+                    originalStudent.GroupFK = s.GroupFK;
+
+                    _context.SaveChanges(); //WITHOUT this line changes won't be saved permanently!!!
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool Delete(int id)
+        {
+            var studentToDelete = Get().SingleOrDefault(x => x.Id == id);
+            if(studentToDelete != null)
+            {
+                _context.Students.Remove(studentToDelete); //removes the student from memory
+                //to persist the change - the student deletion - we need to commit
+                _context.SaveChanges();
+                return true;
+            }
+
+
+            return false;
+
+        }
+
     }
 }

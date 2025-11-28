@@ -122,6 +122,27 @@ namespace Week6_PresentationConsoleApp
                         break;
 
                     case 4:
+                        Console.WriteLine("Input student id: ");
+                        int studentId = Convert.ToInt32(Console.ReadLine());
+
+                        Student filteredStudent = studentsRepository.Get(studentId);
+
+                        if(filteredStudent != null)
+                        {
+                            Console.WriteLine($"Student Id card: {filteredStudent.IdCardNo}");
+                            Console.WriteLine($"Student Name: {filteredStudent.Name}");
+                            Console.WriteLine($"Student Surname: {filteredStudent.Surname}");
+                            Console.WriteLine($"Student Email: {filteredStudent.Email}");
+                            Console.WriteLine($"Student Group Name: {filteredStudent.Group.Name}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No student was found with that id");
+                        }
+
+                            Console.WriteLine();
+                        Console.WriteLine("Press a key to go back to Students menu...");
+
                         break;
 
                     case 999:
@@ -139,6 +160,20 @@ namespace Week6_PresentationConsoleApp
 
 
 
+        }
+
+
+        static void GroupsMenu() {
+
+            //1. Get All groups
+            //2. Go back to main menu
+
+        }
+
+        static void UnitsMenu() {
+         //1. Get All Units
+         //2. Go back to main menu
+        
         }
     }
 }
