@@ -15,6 +15,7 @@ namespace Week6_PresentationConsoleApp
             // ---------- Instantiations --------------
             AttendanceDbContext db = new AttendanceDbContext(); //db represents the database
             StudentsRepository studentsRepository = new StudentsRepository(db);
+            GroupsRepository groupsRepository = new GroupsRepository(db);
 
             int choice = 0;
             do
@@ -30,7 +31,7 @@ namespace Week6_PresentationConsoleApp
                 switch(choice)
                 {
                     case 1:
-                        StudentsMenu(studentsRepository);
+                        StudentsMenu(studentsRepository, groupsRepository);
                         break;
 
                     case 2:
@@ -59,7 +60,7 @@ namespace Week6_PresentationConsoleApp
 
         }
 
-        static void StudentsMenu(StudentsRepository studentsRepository)
+        static void StudentsMenu(StudentsRepository studentsRepository, GroupsRepository groupsRepository)
         {
             int studentChoice = 0;
             do
@@ -70,6 +71,11 @@ namespace Week6_PresentationConsoleApp
                 Console.WriteLine("2.   Search for a student");
                 Console.WriteLine("3.   List by Group");
                 Console.WriteLine("4.   See Details of a student");
+                Console.WriteLine("5. Add student");
+                Console.WriteLine("6. Delete Student");
+                Console.WriteLine("7. Update student");
+
+
                 Console.WriteLine("999. Go Back To Main menu");
 
                 studentChoice = Convert.ToInt32(Console.ReadLine());
@@ -144,6 +150,42 @@ namespace Week6_PresentationConsoleApp
                         Console.WriteLine("Press a key to go back to Students menu...");
 
                         break;
+
+                    case 5:
+                        Student myNewStudent = new Student();
+                        Console.WriteLine("Input the student's name");
+                        myNewStudent.Name = Console.ReadLine();
+
+                        Console.WriteLine("Input the student's surname");
+                        myNewStudent.Surname = Console.ReadLine();
+
+                        Console.WriteLine("Input the student's email");
+                        myNewStudent.Email = Console.ReadLine();
+
+                        Console.WriteLine("Input the student's idcard no");
+                        myNewStudent.IdCardNo = Console.ReadLine();
+
+                        Console.WriteLine("Input the student's group ID");
+                        //...display all the groups
+                        foreach(var g in groupsRepository.Get())
+                        {
+                            Console.WriteLine($"{g.Id} - {g.Name}");
+                        }
+
+                        myNewStudent.GroupFK = Convert.ToInt32(Console.ReadLine());
+
+                        studentsRepository.Add(myNewStudent);
+
+                        Console.WriteLine("Student Added. Press a key to go back to Students menu...");
+
+                        break;
+
+                    case 6:
+                        break;
+
+                    case 7:
+                        break;
+
 
                     case 999:
                         Console.WriteLine("Going back to main menu. Click a key to continue...");

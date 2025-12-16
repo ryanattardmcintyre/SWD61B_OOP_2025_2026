@@ -41,7 +41,9 @@ namespace Week2_InheritanceAndPolymorphism
         public string Id { get; set; }
 
         protected string canvasMode; //protected: allows the field accessible ONLY from this class 
-                                    //or inherited classes 
+                                     //or inherited classes 
+
+        private string privateField;
 
         //methods
         //virtual: will enable the inherited classes to change ONLY the implementation
