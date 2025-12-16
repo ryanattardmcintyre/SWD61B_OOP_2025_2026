@@ -102,13 +102,13 @@ namespace Week6_DataAccess
 
         public bool Update(Student s)
         {
-            if (Get().SingleOrDefault(x => x.IdCardNo == s.IdCardNo) == null)
+            if (Get().SingleOrDefault(x => x.Id == s.Id) == null)
             {
                 return false;
             }
             else
             {
-                var originalStudent = Get().SingleOrDefault(x => x.IdCardNo == s.IdCardNo);
+                var originalStudent = Get().SingleOrDefault(x => x.Id == s.Id);
                 if (originalStudent != null)
                 {
                     originalStudent.Surname = s.Surname;

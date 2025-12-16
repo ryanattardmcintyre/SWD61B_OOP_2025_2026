@@ -181,9 +181,51 @@ namespace Week6_PresentationConsoleApp
                         break;
 
                     case 6:
+
+                        Console.WriteLine("input student id");
+                        int studentIdToBeDeleted = Convert.ToInt32(Console.ReadLine());
+
+                        studentsRepository.Delete(studentIdToBeDeleted);
+
+                        Console.WriteLine("Student Deleted. " +
+                            "Press a key to go back to Students menu...");
+
                         break;
 
                     case 7:
+                        Console.WriteLine("input student id you would like to amend");
+                        int studentIdToBeUpdated = Convert.ToInt32(Console.ReadLine());
+
+                        Student myStudentUpdate = new Student();
+                        myStudentUpdate.Id = studentIdToBeUpdated;
+
+                        Console.WriteLine("Input the student's name");
+                        myStudentUpdate.Name = Console.ReadLine();
+
+                        Console.WriteLine("Input the student's surname");
+                        myStudentUpdate.Surname = Console.ReadLine();
+
+                        Console.WriteLine("Input the student's email");
+                        myStudentUpdate.Email = Console.ReadLine();
+
+                        Console.WriteLine("Input the student's idcard no");
+                        myStudentUpdate.IdCardNo = Console.ReadLine();
+
+                        Console.WriteLine("Input the student's group ID");
+                        //...display all the groups
+                        foreach (var g in groupsRepository.Get())
+                        {
+                            Console.WriteLine($"{g.Id} - {g.Name}");
+                        }
+
+                        myStudentUpdate.GroupFK = Convert.ToInt32(Console.ReadLine());
+
+                        studentsRepository.Update(myStudentUpdate);
+
+                        Console.WriteLine("Student Updated. " +
+                          "Press a key to go back to Students menu...");
+
+
                         break;
 
 
