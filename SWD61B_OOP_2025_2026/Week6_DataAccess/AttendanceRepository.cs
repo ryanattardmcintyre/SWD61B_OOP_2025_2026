@@ -83,6 +83,28 @@ namespace Week6_DataAccess
         }
 
 
+        public double GetAbsenteesimPercentage(int studentId)
+        {
+            //STUDENT = 3
+            //Attendance Records Count = 2
+            //Absent Records Count = 1
+
+            // (1 / 2) * 100% = 50%
+
+            //1/2 = 0
+            //*100 = 0
+
+            var result = from a in _context.Attendances
+                         where a.StudentFK == studentId
+                         group a by a.StudentFK into cluster
+                         select (((cluster.Where(x => x.StatusFK == 2).Count() * 1.0) / (cluster.Count()*1.0)) * 100.0);
+
+            return result.First();
+        }
+
+
+
+
 
     }
 }

@@ -16,6 +16,8 @@ namespace Week6_PresentationConsoleApp
             AttendanceDbContext db = new AttendanceDbContext(); //db represents the database
             StudentsRepository studentsRepository = new StudentsRepository(db);
             GroupsRepository groupsRepository = new GroupsRepository(db);
+            AttendanceRepository attendanceRepository = new AttendanceRepository(db);
+            UnitsRepository unitsRepository = new UnitsRepository(db);
 
             int choice = 0;
             do
@@ -37,10 +39,11 @@ namespace Week6_PresentationConsoleApp
                     case 2:
                         break;
 
-                        case 3:
+                    case 3:
                         break;
 
                     case 4:
+                        AttendancesMenu(studentsRepository, groupsRepository, attendanceRepository, unitsRepository);
                         break;
 
                     case 5:
@@ -58,6 +61,116 @@ namespace Week6_PresentationConsoleApp
 
 
 
+        }
+
+
+        static void AttendancesMenu(StudentsRepository studentsRepository, GroupsRepository groupsRepository,
+            AttendanceRepository attendancesRepository, UnitsRepository unitsRepository)
+        {
+            int choice = 0;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("-------- Attendances menu ----------");
+                Console.WriteLine("1. Take Attendance");
+                Console.WriteLine("2. Search for an attendance");
+
+                Console.WriteLine("3. Display Absenteesim Percentage for a student");
+                Console.WriteLine("4. Display the surname and how many students have got that surname");
+                Console.WriteLine("5. Display how many students there are per group");
+                Console.WriteLine("6. Display monthly absenteeism and sort by the most missed month"); //Jan - 50%, Feb - 70%, Mar - 30%
+                Console.WriteLine("7. Display monthly absenteeism for a specific student");
+                Console.WriteLine("8. Find the avg absenteesim for a student across different units");
+
+                Console.WriteLine("9. Top 5 present students");
+                Console.WriteLine("10. Top 5 present students for group");
+                Console.WriteLine("11. Top 5 present students for group within a date range");
+
+                Console.WriteLine("12. List attendance for student");
+                Console.WriteLine("999. Go Back To Main menu");
+                choice  = Convert.ToInt32(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        //1 ask for which unit
+                        foreach (var u in unitsRepository.Get())
+                        {
+                            Console.WriteLine($"{u.Code} - {u.Name}");
+                        }
+
+                        Console.WriteLine("Type the unit code which you would like to take attendance of: ");
+                        var selectedUnitCode = Console.ReadLine();
+
+
+                        //2 ask for which group
+                        foreach (var g in groupsRepository.Get())
+                        {
+                            Console.WriteLine($"{g.Id} - {g.Name}");
+                        }
+
+                        Console.WriteLine("Type the group Ide which you would like to take attendance of: ");
+                        var selectedGroupId = Console.ReadLine();
+
+                        //3 get students according to group
+                        var listOfStudents = studentsRepository.GetByGroup(Convert.ToInt32(selectedGroupId));
+
+                        List<Attendance> attendances = new List<Attendance>();
+                        DateTime attendanceTakenOn = DateTime.Now;
+                        //4 start looping within that list of students
+                        foreach(var student in listOfStudents)
+                        {
+                            Console.WriteLine($"Student {student.Name} {student.Surname}. Present / Absent ?");
+                            Console.WriteLine("Type 1. Present / 2. Absent");
+                            //5 ask the user to mark present or absent
+                            var status = Convert.ToInt16(Console.ReadLine());
+
+                            Attendance attendance = new Attendance();
+                            attendance.Author = "";
+                            attendance.StudentFK = student.Id;
+                            attendance.StatusFK = status;
+                            attendance.UnitFK = selectedUnitCode;
+                            attendance.Timeslot = attendanceTakenOn;
+
+                            attendances.Add(attendance);
+                        }
+
+                        attendancesRepository.TakeAttendances(attendances);
+
+                        Console.WriteLine("Saved! Press any key to back to previous menu");
+                        Console.ReadKey();
+
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Student Id please?");
+                        int selectedStudentId = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine(attendancesRepository.GetAbsenteesimPercentage(selectedStudentId) + "%");
+                        Console.WriteLine("Press any key to back to previous menu");
+                        Console.ReadKey();
+                        break;
+
+
+                    case 4:
+
+                        var surnameStatisticalList = studentsRepository.GetRecordsCountForSurnames();
+
+                        foreach(var surname in surnameStatisticalList)
+                        {
+                            Console.WriteLine($"{surname.Surname} -  {surname.Count}");
+                        }
+
+                        Console.WriteLine("Saved! Press any key to back to previous menu");
+                        Console.ReadKey();
+
+                        break;
+
+
+
+                }
+
+            } while (choice != 999);
         }
 
         static void StudentsMenu(StudentsRepository studentsRepository, GroupsRepository groupsRepository)

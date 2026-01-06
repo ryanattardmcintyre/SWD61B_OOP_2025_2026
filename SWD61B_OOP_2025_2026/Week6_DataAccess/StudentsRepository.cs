@@ -140,5 +140,34 @@ namespace Week6_DataAccess
 
         }
 
+
+        // Surname - Count
+        // Agius - 2
+        // Zammit - 1
+        // Vella - 1
+
+        public List<SurnameStatsViewModel> GetRecordsCountForSurnames()
+        {
+            //1. start with declaring variable using var <name>
+            //2. continue with from leaving the select till the end
+            //3. think of which "table" you would like to elicit data from
+            //4. do you need filtering?
+            //5. decide by which column you want to group! i.e if we are counting records for surnames thus
+            //                                                 we group by surname
+            var list = from s in _context.Students
+                       group s by s.Surname into cluster //group the variable representing student by the column
+                                                         //you decided in no. 5
+                                                         //give the group a name
+                       orderby cluster.Count() descending
+                       select new SurnameStatsViewModel()
+                       {
+                           Surname = cluster.Key, //in Key <<< you will find the column value by which you grouped
+                           Count = cluster.Count()//counting how many records are found in this "cluster/group" grouped by Surname
+                       };
+
+            return list.ToList();
+           // return list.OrderByDescending(x => x.Count).ToList();
+        }
+
     }
 }
