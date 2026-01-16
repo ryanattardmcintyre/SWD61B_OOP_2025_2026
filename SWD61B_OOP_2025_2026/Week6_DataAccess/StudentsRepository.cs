@@ -169,5 +169,22 @@ namespace Week6_DataAccess
            // return list.OrderByDescending(x => x.Count).ToList();
         }
 
+        public List<GroupStatisticsViewModel> GetNumberOfStudentsPerGroup()
+        {
+            //Group Id   |   Group Name | No. of students
+
+            var result = from s in _context.Students
+                         group s by s.Group into cluster //s.Group becomes the Key
+                         select new GroupStatisticsViewModel()
+                         {
+                             GroupId = cluster.Key.Id,
+                             GroupName = cluster.Key.Name,
+                             TotalCount = cluster.Count()
+                         };
+
+            return result.ToList();
+
+        }
+
     }
 }

@@ -103,8 +103,81 @@ namespace Week6_DataAccess
         }
 
 
+        // Month | Absenteesim (%) desc
+        public List<MonthlyStatsViewModel> GetMonthlyAbsenteeism()
+        {
+            var result = from a in _context.Attendances
+                         group a by new { a.Timeslot.Month, a.Timeslot.Year } into cluster
+                         orderby (((cluster.Where(x => x.StatusFK == 2).Count() * 1.0)
+                                  / (cluster.Count() * 1.0)) * 100.0) descending
+                         select new MonthlyStatsViewModel()
+                         {
+                             Month = cluster.Key.Month,
+                             Year = cluster.Key.Year,
+                             AbsenteesimPercentage = (((cluster.Where(x => x.StatusFK == 2).Count() * 1.0)
+                                                        / (cluster.Count() * 1.0)) * 100.0)
+                         };
 
+            return result.ToList();
+        }
 
+        //case 7
+        public List<MonthlyStatsViewModel> GetMonthlyAbsenteeism(int studentId)
+        {
+            var result = from a in _context.Attendances
+                         where a.StudentFK == studentId
+                         group a by new { a.Timeslot.Month, a.Timeslot.Year } into cluster
+                         orderby (((cluster.Where(x => x.StatusFK == 2).Count() * 1.0)
+                                  / (cluster.Count() * 1.0)) * 100.0) descending
+                         select new MonthlyStatsViewModel()
+                         {
+                             Month = cluster.Key.Month,
+                             Year = cluster.Key.Year,
+                             AbsenteesimPercentage = (((cluster.Where(x => x.StatusFK == 2).Count() * 1.0)
+                                                        / (cluster.Count() * 1.0)) * 100.0)
+                         };
+
+            return result.ToList();
+        }
+
+        //Unit Id | Unit Name | Absenteesim
+        //case 8
+        public List<UnitStatisticsViewModel> GetAbseentisimByGroupForStudent(int studentId)
+        {
+            var result = from a in _context.Attendances
+                         where a.StudentFK == studentId
+                         group a by a.Unit  into cluster
+                         orderby (((cluster.Where(x => x.StatusFK == 2).Count() * 1.0)
+                                  / (cluster.Count() * 1.0)) * 100.0) descending
+                         select new UnitStatisticsViewModel()
+                         {
+                             UnitId = cluster.Key.Code,
+                             UnitName = cluster.Key.Name,
+                             AbsenteeismPercentage = (((cluster.Where(x => x.StatusFK == 2).Count() * 1.0)
+                                                        / (cluster.Count() * 1.0)) * 100.0)
+                         };
+
+            return result.ToList();
+
+        }
+        public double GetAverageAbseentisimByGroupForStudent(int studentId)
+        {
+            var result = from a in _context.Attendances
+                         where a.StudentFK == studentId
+                         group a by a.Unit into cluster
+                         orderby (((cluster.Where(x => x.StatusFK == 2).Count() * 1.0)
+                                  / (cluster.Count() * 1.0)) * 100.0) descending
+                         select new UnitStatisticsViewModel()
+                         {
+                             UnitId = cluster.Key.Code,
+                             UnitName = cluster.Key.Name,
+                             AbsenteeismPercentage = (((cluster.Where(x => x.StatusFK == 2).Count() * 1.0)
+                                                        / (cluster.Count() * 1.0)) * 100.0)
+                         };
+
+            return result.Average(x => x.AbsenteeismPercentage);
+
+        }
 
     }
 }

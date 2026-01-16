@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace Week6_PresentationConsoleApp
             // ---------- Instantiations --------------
             AttendanceDbContext db = new AttendanceDbContext(); //db represents the database
             StudentsRepository studentsRepository = new StudentsRepository(db);
+
+
             GroupsRepository groupsRepository = new GroupsRepository(db);
             AttendanceRepository attendanceRepository = new AttendanceRepository(db);
             UnitsRepository unitsRepository = new UnitsRepository(db);
@@ -167,6 +170,27 @@ namespace Week6_PresentationConsoleApp
                         break;
 
 
+                    case 5:
+                        var statistics = studentsRepository.GetNumberOfStudentsPerGroup();
+
+                        foreach(var stat in statistics)
+                        {
+                            Console.WriteLine($"{stat.GroupId} | {stat.GroupName} | {stat.TotalCount}");
+                        }
+                        Console.WriteLine("Press any key to back to previous menu");
+                        Console.ReadKey();
+                        break;
+
+                    case 6:
+                        var monthly_statistics = attendancesRepository.GetMonthlyAbsenteeism();
+                        foreach(var monthly in monthly_statistics)
+                        {
+                            var month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(monthly.Month);
+                            Console.WriteLine($"{month} | {monthly.Year} | {monthly.AbsenteesimPercentage}%");
+                        }
+                        Console.WriteLine("Press any key to back to previous menu");
+                        Console.ReadKey();
+                        break;
 
                 }
 
