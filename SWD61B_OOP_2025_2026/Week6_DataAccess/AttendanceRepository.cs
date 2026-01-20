@@ -20,11 +20,18 @@ namespace Week6_DataAccess
 
         public void TakeAttendance(Attendance a)
         { 
+            if(_context.Attendances.SingleOrDefault(x=> x.UnitFK == a.UnitFK && x.StudentFK == a.StudentFK && x.Timeslot == a.Timeslot)!= null)
+            {
+                throw new AttendanceExistsException();
+            }
+
            _context.Attendances.Add(a);
            _context.SaveChanges(); //<<<<< without this nothing will be saved in the database
         }
 
         public void TakeAttendances(List<Attendance> attendances) {
+
+
             DateTime timeTaken = DateTime.Now;
 
             foreach (var attendance in attendances)

@@ -57,6 +57,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="AttendanceDetailsViewModel.cs" />
+    <Compile Include="AttendanceExistsException.cs" />
     <Compile Include="Group.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

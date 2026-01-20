@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -91,56 +92,101 @@ namespace Week6_PresentationConsoleApp
 
                 Console.WriteLine("12. List attendance for student");
                 Console.WriteLine("999. Go Back To Main menu");
-                choice  = Convert.ToInt32(Console.ReadLine());
+
+
+
+
+                do
+                {
+                    Console.Clear(); Console.WriteLine("Input valid menu choice:");
+                    try
+                    {
+                        choice = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Input not valid, hence setting your input to 999; System error: " + ex.Message);
+                        choice = -1;
+                    }
+                }
+                while (choice != 999 || (choice < 1 && choice > 12));
+
 
                 switch (choice)
                 {
                     case 1:
-                        //1 ask for which unit
-                        foreach (var u in unitsRepository.Get())
+                        try
                         {
-                            Console.WriteLine($"{u.Code} - {u.Name}");
+                            //1 ask for which unit
+                            foreach (var u in unitsRepository.Get())
+                            {
+                                Console.WriteLine($"{u.Code} - {u.Name}");
+                            }
+
+                            Console.WriteLine("Type the unit code which you would like to take attendance of: ");
+                            var selectedUnitCode = Console.ReadLine();
+
+
+                            //2 ask for which group
+                            foreach (var g in groupsRepository.Get())
+                            {
+                                Console.WriteLine($"{g.Id} - {g.Name}");
+                            }
+
+                            Console.WriteLine("Type the group Ide which you would like to take attendance of: ");
+                            var selectedGroupId = Console.ReadLine();
+
+                            //3 get students according to group
+                            var listOfStudents = studentsRepository.GetByGroup(Convert.ToInt32(selectedGroupId));
+
+                            List<Attendance> attendances = new List<Attendance>();
+                            DateTime attendanceTakenOn = DateTime.Now;
+                            //4 start looping within that list of students
+                            foreach (var student in listOfStudents)
+                            {
+                                Console.WriteLine($"Student {student.Name} {student.Surname}. Present / Absent ?");
+                                Console.WriteLine("Type 1. Present / 2. Absent");
+                                //5 ask the user to mark present or absent
+                                var status = Convert.ToInt16(Console.ReadLine());
+
+                                Attendance attendance = new Attendance();
+                                attendance.Author = "";
+                                attendance.StudentFK = student.Id;
+                                attendance.StatusFK = status;
+                                attendance.UnitFK = selectedUnitCode;
+                                attendance.Timeslot = attendanceTakenOn;
+
+                                attendances.Add(attendance);
+                            }
+
+                            attendancesRepository.TakeAttendances(attendances);
+                            Console.WriteLine("Saved! Press any key to back to previous menu");
+                        }
+                        catch (AttendanceExistsException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        catch (FormatException ex)
+                        {
+                            //program willbe going in here when there is a conversion problem
+                            Console.WriteLine("One of your inputs is not valid. Check! If you were asked to input a number don't input text");
+                        }
+                        catch (EntityException ex)
+                        {
+                            Console.WriteLine("Problem connecting with the database. We will check about that later");
+                            //log ex.Message
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine("Problem happened, try again later");
+                            //log ex.Message
+                        }
+                        finally //this always runs - error or not
+                        {
+                            Console.WriteLine("Press a key to continue...");
                         }
 
-                        Console.WriteLine("Type the unit code which you would like to take attendance of: ");
-                        var selectedUnitCode = Console.ReadLine();
-
-
-                        //2 ask for which group
-                        foreach (var g in groupsRepository.Get())
-                        {
-                            Console.WriteLine($"{g.Id} - {g.Name}");
-                        }
-
-                        Console.WriteLine("Type the group Ide which you would like to take attendance of: ");
-                        var selectedGroupId = Console.ReadLine();
-
-                        //3 get students according to group
-                        var listOfStudents = studentsRepository.GetByGroup(Convert.ToInt32(selectedGroupId));
-
-                        List<Attendance> attendances = new List<Attendance>();
-                        DateTime attendanceTakenOn = DateTime.Now;
-                        //4 start looping within that list of students
-                        foreach(var student in listOfStudents)
-                        {
-                            Console.WriteLine($"Student {student.Name} {student.Surname}. Present / Absent ?");
-                            Console.WriteLine("Type 1. Present / 2. Absent");
-                            //5 ask the user to mark present or absent
-                            var status = Convert.ToInt16(Console.ReadLine());
-
-                            Attendance attendance = new Attendance();
-                            attendance.Author = "";
-                            attendance.StudentFK = student.Id;
-                            attendance.StatusFK = status;
-                            attendance.UnitFK = selectedUnitCode;
-                            attendance.Timeslot = attendanceTakenOn;
-
-                            attendances.Add(attendance);
-                        }
-
-                        attendancesRepository.TakeAttendances(attendances);
-
-                        Console.WriteLine("Saved! Press any key to back to previous menu");
+                      
                         Console.ReadKey();
 
                         break;
