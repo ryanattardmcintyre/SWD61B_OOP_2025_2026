@@ -179,5 +179,104 @@ namespace Week6_DataAccess
 
         }
 
+
+        //Task 9
+        public List<StudentsStatsViewModel> GetTop5MostPresentStudents()
+        {
+            //Result:
+            //FirstName LastName Presence (%)
+
+
+            //STUDENT = 3
+            //Attendance Records Count = 2
+            //Absent Records Count = 1
+
+            // (1 / 2) * 100% = 50%
+
+            //1/2 = 0
+            //*100 = 0
+
+            var result = from a in _context.Attendances
+                         group a by a.Student into cluster
+                         //group a by new {a.Student.Name, a.Student.Surname, a.StudentId} into cluster
+                         orderby (((cluster.Where(x => x.StatusFK == 1).Count() * 1.0) / (cluster.Count() * 1.0)) * 100.0) descending
+                         select new StudentsStatsViewModel()
+                         {
+                             FirstName = cluster.Key.Name,
+                             LastName = cluster.Key.Surname,
+                             Presence = (((cluster.Where(x => x.StatusFK == 1).Count() * 1.0) / (cluster.Count() * 1.0)) * 100.0)
+                         }
+                         ;
+
+            return result.Take(5).ToList(); //Select Top 5 From Attendances ...
+        }
+
+
+        //Task 10
+        public List<StudentsStatsViewModel> GetTop5MostPresentStudentsPerGroup(int groupId)
+        {
+            //Result:
+            //FirstName LastName Presence (%)
+
+
+            //STUDENT = 3
+            //Attendance Records Count = 2
+            //Absent Records Count = 1
+
+            // (1 / 2) * 100% = 50%
+
+            //1/2 = 0
+            //*100 = 0
+
+            var result = from a in _context.Attendances
+                         where a.Student.GroupFK == groupId
+                         group a by a.Student into cluster
+                         //group a by new {a.Student.Name, a.Student.Surname, a.StudentId} into cluster
+                         orderby (((cluster.Where(x => x.StatusFK == 1).Count() * 1.0) / (cluster.Count() * 1.0)) * 100.0) descending
+                         select new StudentsStatsViewModel()
+                         {
+                             FirstName = cluster.Key.Name,
+                             LastName = cluster.Key.Surname,
+                             Presence = (((cluster.Where(x => x.StatusFK == 1).Count() * 1.0) / (cluster.Count() * 1.0)) * 100.0)
+                         }
+                         ;
+
+            return result.Take(5).ToList(); //Select Top 5 From Attendances ...
+        }
+
+
+        //Task 11
+        public List<StudentsStatsViewModel> GetTop5MostPresentStudentsPerGroupWithinADateRange(int groupId, DateTime fromDate,
+                                                                                                DateTime toDate)
+        {
+            //Result:
+            //FirstName LastName Presence (%)
+
+
+            //STUDENT = 3
+            //Attendance Records Count = 2
+            //Absent Records Count = 1
+
+            // (1 / 2) * 100% = 50%
+
+            //1/2 = 0
+            //*100 = 0
+
+            var result = from a in _context.Attendances
+                         where a.Student.GroupFK == groupId  && a.Timeslot >= fromDate && a.Timeslot <= toDate
+                         group a by a.Student into cluster
+                         //group a by new {a.Student.Name, a.Student.Surname, a.StudentId} into cluster
+                         orderby (((cluster.Where(x => x.StatusFK == 1).Count() * 1.0) / (cluster.Count() * 1.0)) * 100.0) descending
+                         select new StudentsStatsViewModel()
+                         {
+                             FirstName = cluster.Key.Name,
+                             LastName = cluster.Key.Surname,
+                             Presence = (((cluster.Where(x => x.StatusFK == 1).Count() * 1.0) / (cluster.Count() * 1.0)) * 100.0)
+                         }
+                         ;
+
+            return result.Take(5).ToList(); //Select Top 5 From Attendances ...
+        }
+
     }
 }

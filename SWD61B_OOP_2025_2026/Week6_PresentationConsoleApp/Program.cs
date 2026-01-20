@@ -192,6 +192,18 @@ namespace Week6_PresentationConsoleApp
                         Console.ReadKey();
                         break;
 
+
+                    case 9:
+                        var top5students = attendancesRepository.GetTop5MostPresentStudents();
+                        foreach(var myStudent in top5students)
+                        {
+                            Console.WriteLine($"{myStudent.FirstName} {myStudent.LastName} - {myStudent.Presence}");
+                        }
+
+                        Console.WriteLine("Press any key to back to previous menu");
+                        Console.ReadKey();
+                        break;
+
                 }
 
             } while (choice != 999);
